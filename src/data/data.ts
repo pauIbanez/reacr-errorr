@@ -10,7 +10,7 @@ export const defaultErrorOptions: ErrorrOptions = {
     offsetX: 0,
   },
   positioning: {
-    block: "end",
+    block: "after",
     inline: "start",
   },
 };
