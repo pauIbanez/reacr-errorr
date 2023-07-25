@@ -3,9 +3,16 @@ import { RefObject } from "react";
 export type Positioning = "start" | "center" | "end";
 export type Animation = "fadeIn" | "fadeOut" | "fadeInOut" | "instant";
 
+export interface ErrorrCreationData {
+  name: string;
+  options?: ErrorrCreationOptions;
+  activate(): void;
+  ref: RefObject<HTMLDivElement>;
+}
+
 export interface ErrorrData {
   name: string;
-  options?: ErrorrOptions;
+  options: ErrorrOptions;
   activate(): void;
   ref: RefObject<HTMLDivElement>;
 }
@@ -14,14 +21,15 @@ export interface ErrorrContextData {
   errorrs: ErrorrData[];
   loadErrorr(errorr: ErrorrData): void;
   activateErrorr(name: string): void;
+  getOptions(options: ErrorrCreationOptions): ErrorrOptions;
 }
 
 export interface ErrorrContextOptions {
-  errorrOptions?: ErrorrOptions;
+  errorrOptions?: ErrorrCreationOptions;
   debug?: boolean;
 }
 
-export interface ErrorrOptions {
+export interface ErrorrCreationOptions {
   /**
    * The offset X and Y for the positioning of the pop-up errorr. This offset is applied to the base position
    */
@@ -46,6 +54,21 @@ export interface ErrorrOptions {
   animation?: {
     type?: Animation;
     durationInMs?: number;
+  };
+}
+
+export interface ErrorrOptions {
+  offsets: {
+    offsetX: number;
+    offsetY: number;
+  };
+  positioning: {
+    block: Positioning;
+    inline: Positioning;
+  };
+  animation: {
+    type: Animation;
+    durationInMs: number;
   };
 }
 

@@ -1,11 +1,6 @@
 import { createContext } from "react";
 import { ErrorrContextData } from "../types/types";
-
-const defaultValues: ErrorrContextData = {
-  errorrs: [],
-  loadErrorr: () => null,
-  activateErrorr: () => null,
-};
+import { defaultValues } from "../data/data";
 
 const ErrorrContext = createContext<ErrorrContextData>(defaultValues);
 ErrorrContext.displayName = "Errorr context";

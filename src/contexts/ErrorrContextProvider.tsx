@@ -1,10 +1,15 @@
 import { useCallback, useState } from "react";
 import {
+  ErrorrOptions,
   ErrorrContextData,
   ErrorrContextOptions,
+  ErrorrCreationData,
   ErrorrData,
+  ErrorrCreationOptions,
 } from "../types/types";
 import ErrorrContext from "./ErrorrContext.contectCreatior";
+import _ from "lodash";
+import { defaultErrorOptions } from "../data/data";
 
 interface Props {
   options?: ErrorrContextOptions;
@@ -14,8 +19,19 @@ interface Props {
 const ErrorrContextProvider = ({ children, options }: Props) => {
   const [errorrs, setErrorrs] = useState<ErrorrData[]>([]);
 
-  const loadErrorr = (errorr: ErrorrData) => {
-    setErrorrs((prevErrorrs) => [...prevErrorrs, errorr]);
+  const getOptions = (options: ErrorrCreationOptions): ErrorrOptions => {
+    const defaultOptions: ErrorrOptions = JSON.parse(
+      JSON.stringify(defaultErrorOptions)
+    );
+
+    return _.merge(defaultOptions, options);
+  };
+
+  const loadErrorr = (errorr: ErrorrCreationData) => {
+    const newErrorr: ErrorrCreationData = JSON.parse(JSON.stringify(errorr));
+    newErrorr.options = getOptions(newErrorr.options || {});
+
+    setErrorrs((prevErrorrs) => [...prevErrorrs, newErrorr as ErrorrData]);
   };
 
   const activateErrorr = useCallback(
@@ -35,6 +51,7 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
     errorrs,
     loadErrorr,
     activateErrorr,
+    getOptions,
   };
 
   return (
