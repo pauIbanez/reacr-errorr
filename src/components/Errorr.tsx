@@ -190,10 +190,14 @@ const Errorr = ({
         baseTop = dimention.height - (contentRef.current?.clientHeight ?? 10);
         break;
 
+      case "center":
+        baseTop =
+          dimention.height / 2 - (contentRef.current?.clientHeight ?? 10) / 2;
+        break;
+
       case "centered":
         baseTop =
           dimention.height / 2 - (contentRef.current?.clientHeight ?? 10) / 2;
-
         break;
 
       case "after":
@@ -208,8 +212,14 @@ const Errorr = ({
         shapeTop = (contentRef.current?.clientHeight ?? 10) / 2 - 5;
         shapeRot = 90;
         break;
+
       case "start":
         baseLeft = 0;
+        break;
+
+      case "center":
+        baseLeft = dimention.width / 2 - 30;
+        shapeLeft = 20;
         break;
 
       case "centered":

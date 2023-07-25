@@ -1,4 +1,10 @@
-export type Positioning = "before" | "start" | "centered" | "end" | "after";
+export type Positioning =
+  | "before"
+  | "start"
+  | "centered"
+  | "center"
+  | "end"
+  | "after";
 export type Animation =
   | "fadeIn"
   | "fadeOut"
