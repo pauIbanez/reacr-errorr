@@ -39,9 +39,9 @@ export interface ErrorrCreationOptions {
     offsetY?: number;
   };
   /**
-   * The base positioning (before offset) of the pop-up relative to the content
-   * @param block - Verical base position  | Default "end"
-   * @param inline - Horizontal base position | Default "start"
+   * The positioning (before offset) of the pop-up relative to the content
+   * @param block - Verical position  | Default "after"
+   * @param inline - Horizontal position | Default "start"
    */
   positioning?: {
     block?: Positioning;
