@@ -37,11 +37,24 @@ const DefaultErrorHolder = styled.div`
   top: 15px;
 `;
 
-const DefaultErrorContainer = styled.div`
+const DefaultErrorContainer = styled.div<{ styleData?: StyleData }>`
   padding: 10px 30px;
   background-color: white;
   border-radius: 15px;
   box-shadow: 6px 6px 25px rgba(0, 0, 0, 0.2), -6px -6px 25px rgba(0, 0, 0, 0.2);
+  height: ${(props) =>
+    props.styleData?.height
+      ? typeof props.styleData?.height === "string"
+        ? props.styleData?.height
+        : props.styleData?.height + "px"
+      : "fit-content"};
+
+  width: ${(props) =>
+    props.styleData?.width
+      ? typeof props.styleData?.width === "string"
+        ? props.styleData?.width
+        : props.styleData?.width + "px"
+      : "fit-content"};
 `;
 
 const Shape = styled.div`
@@ -57,9 +70,16 @@ const Shape = styled.div`
   left: 20px;
 `;
 
-const DefaultErrorMessage = styled.p`
-  font-size: 18px;
-  color: red;
+const DefaultErrorMessage = styled.p<{ styleData?: StyleData }>`
+  font-size: ${(props) =>
+    props.styleData?.fontSize
+      ? typeof props.styleData?.fontSize === "string"
+        ? props.styleData?.fontSize
+        : props.styleData?.fontSize + "px"
+      : "14px"};
+  color: ${(props) => props.styleData?.color ?? "red"};
+
+  font-weight: ${(props) => props.styleData?.fontWeight ?? "500"};
   white-space: nowrap;
   margin: 0;
 `;
@@ -175,8 +195,8 @@ const Errorr = ({
         ) : (
           <div style={{ position: "relative" }}>
             <DefaultErrorHolder>
-              <DefaultErrorContainer>
-                <DefaultErrorMessage>
+              <DefaultErrorContainer styleData={styleData}>
+                <DefaultErrorMessage styleData={styleData}>
                   {message ? message : "Default message"}
                 </DefaultErrorMessage>
                 <Shape />
