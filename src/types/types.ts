@@ -1,5 +1,3 @@
-import { RefObject } from "react";
-
 export type Positioning = "start" | "center" | "end";
 export type Animation = "fadeIn" | "fadeOut" | "fadeInOut" | "instant";
 
@@ -7,14 +5,12 @@ export interface ErrorrCreationData {
   name: string;
   options?: ErrorrCreationOptions;
   activate(): void;
-  ref: RefObject<HTMLDivElement>;
 }
 
 export interface ErrorrData {
   name: string;
   options: ErrorrOptions;
   activate(): void;
-  ref: RefObject<HTMLDivElement>;
 }
 
 export interface ErrorrContextData {
