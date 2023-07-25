@@ -19,7 +19,7 @@ export interface ErrorrData {
 
 export interface ErrorrContextData {
   errorrs: ErrorrData[];
-  loadErrorr(errorr: ErrorrData): void;
+  loadErrorr(errorr: ErrorrCreationData): void;
   activateErrorr(name: string): void;
   getOptions(options: ErrorrCreationOptions): ErrorrOptions;
 }
