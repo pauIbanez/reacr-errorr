@@ -1,5 +1,10 @@
-export type Positioning = "start" | "center" | "end";
-export type Animation = "fadeIn" | "fadeOut" | "fadeInOut" | "instant";
+export type Positioning = "before" | "start" | "centered" | "end" | "after";
+export type Animation =
+  | "fadeIn"
+  | "fadeOut"
+  | "fadeInOut"
+  | "instant"
+  | "centered";
 
 export interface ErrorrCreationData {
   name: string;
@@ -27,15 +32,15 @@ export interface ErrorrContextOptions {
 
 export interface ErrorrCreationOptions {
   /**
-   * The offset X and Y for the positioning of the pop-up errorr. This offset is applied to the base position
+   * The offset X and Y for the positioning of the pop-up errorr. This offset is applied to the base position.
    */
   offsets?: {
     offsetX?: number;
     offsetY?: number;
   };
   /**
-   * The base positioning relative to the parent component
-   * @param block - Verical base position | Default "end"
+   * The base positioning (before offset) of the pop-up relative to the content
+   * @param block - Verical base position  | Default "end"
    * @param inline - Horizontal base position | Default "start"
    */
   positioning?: {
@@ -51,6 +56,11 @@ export interface ErrorrCreationOptions {
     type?: Animation;
     durationInMs?: number;
   };
+  /**
+   * This option eliminates the error disaperance, allowing you to design it in position.
+   * This does not update on runtime, refresh the page after setting this to true
+   */
+  debug?: boolean;
 }
 
 export interface ErrorrOptions {
@@ -74,5 +84,5 @@ export interface StyleData {
   backgroundColor?: string;
   color?: string;
   fontSize?: number | string;
-  fontWeight?: number | string;
+  fontWeight?: number;
 }

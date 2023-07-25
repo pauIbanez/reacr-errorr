@@ -32,9 +32,7 @@ const Content = styled.div<{ top: number; left: number; show: boolean }>`
 `;
 
 const DefaultErrorHolder = styled.div`
-  position: absolute;
-  left: 0;
-  top: 15px;
+  position: relative;
 `;
 
 const DefaultErrorContainer = styled.div<{ styleData?: StyleData }>`
@@ -57,7 +55,11 @@ const DefaultErrorContainer = styled.div<{ styleData?: StyleData }>`
       : "fit-content"};
 `;
 
-const Shape = styled.div`
+const Shape = styled.div<{
+  top: number;
+  left: number;
+  rotation: number;
+}>`
   position: absolute;
   width: 0;
   height: 0;
@@ -66,8 +68,10 @@ const Shape = styled.div`
   border-right: 10px solid transparent;
   border-bottom: 10px solid white;
 
-  top: -10px;
-  left: 20px;
+  top: ${(props) => props.top}px;
+  left: ${(props) => props.left}px;
+
+  transform: rotate(${(props) => props.rotation}deg);
 `;
 
 const DefaultErrorMessage = styled.p<{ styleData?: StyleData }>`
@@ -102,12 +106,24 @@ const Errorr = ({
   const [dimention, setDimention] = useState<{ height: number; width: number }>(
     { height: 10, width: 10 }
   );
-  const [position, setPosition] = useState<{ top: number; left: number }>({
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+  }>({
     left: 0,
     top: 0,
   });
 
   const [fullOptions, setFullOptions] = useState<ErrorrOptions | null>(null);
+  const [shapePosition, setShapePosition] = useState<{
+    top: number;
+    left: number;
+    rotation: number;
+  }>({
+    top: -10,
+    left: 20,
+    rotation: 0,
+  });
 
   const activate = () => {
     if (timerRef.current.value) {
@@ -115,10 +131,11 @@ const Errorr = ({
     }
 
     setIsShowing(true);
-
-    timerRef.current.value = setTimeout(() => {
-      setIsShowing(false);
-    }, 2000);
+    if (!options?.debug) {
+      timerRef.current.value = setTimeout(() => {
+        setIsShowing(false);
+      }, 2000);
+    }
   };
 
   useEffectOnce(() => {
@@ -136,11 +153,15 @@ const Errorr = ({
   }, [getOptions, options]);
 
   useEffect(() => {
+    console.log(contentRef.current?.clientWidth);
     setDimention({
-      height: contentRef.current?.clientHeight || 10,
-      width: contentRef.current?.clientWidth || 10,
+      height: errorHolderRef.current?.clientHeight || 10,
+      width: errorHolderRef.current?.clientWidth || 10,
     });
-  }, [contentRef.current?.clientWidth, contentRef.current?.clientHeight]);
+  }, [
+    errorHolderRef.current?.clientWidth,
+    errorHolderRef.current?.clientHeight,
+  ]);
 
   useEffect(() => {
     let baseTop = 0;
@@ -149,27 +170,64 @@ const Errorr = ({
     let baseLeft = 0;
     let left = 0;
 
+    let shapeTop = -10;
+    let shapeLeft = 20;
+    let shapeRot = 0;
+
     switch (fullOptions?.positioning.block) {
+      case "before":
+        baseTop = -(contentRef.current?.clientHeight ?? 10) - 15;
+        shapeRot = 180;
+        shapeTop = contentRef.current?.clientHeight ?? 10;
+        break;
+
       case "start":
         baseTop = 0;
+        shapeTop = dimention.height / 2 + 3;
         break;
-      case "center":
-        baseTop = dimention.height / 2;
-        break;
+
       case "end":
-        baseTop = dimention.height;
+        baseTop = dimention.height - (contentRef.current?.clientHeight ?? 10);
+        break;
+
+      case "centered":
+        baseTop =
+          dimention.height / 2 - (contentRef.current?.clientHeight ?? 10) / 2;
+
+        break;
+
+      case "after":
+        baseTop = dimention.height + 15;
         break;
     }
 
     switch (fullOptions?.positioning.inline) {
+      case "before":
+        baseLeft = -(contentRef.current?.clientWidth ?? 10) - 15;
+        shapeLeft = (contentRef.current?.clientWidth ?? 10) - 5;
+        shapeTop = (contentRef.current?.clientHeight ?? 10) / 2 - 5;
+        shapeRot = 90;
+        break;
       case "start":
         baseLeft = 0;
         break;
-      case "center":
-        baseLeft = dimention.width / 2;
+
+      case "centered":
+        baseLeft =
+          dimention.width / 2 - (contentRef.current?.clientWidth ?? 10) / 2;
+        shapeLeft = (contentRef.current?.clientWidth ?? 10) / 2 - 10;
         break;
+
       case "end":
-        baseLeft = dimention.width;
+        baseLeft = dimention.width - (contentRef.current?.clientWidth ?? 10);
+        shapeLeft = (contentRef.current?.clientWidth ?? 10) - 40;
+        break;
+
+      case "after":
+        baseLeft = dimention.width + 15;
+        shapeLeft = -15;
+        shapeTop = (contentRef.current?.clientHeight ?? 10) / 2 - 5;
+        shapeRot = -90;
         break;
     }
 
@@ -180,15 +238,26 @@ const Errorr = ({
       top,
       left,
     });
-  }, [dimention, fullOptions]);
+
+    setShapePosition({
+      top: shapeTop,
+      left: shapeLeft,
+      rotation: shapeRot,
+    });
+  }, [
+    dimention,
+    fullOptions,
+    contentRef.current?.clientWidth,
+    contentRef.current?.clientHeight,
+  ]);
 
   return (
-    <Holder ref={contentRef}>
+    <Holder ref={errorHolderRef}>
       <Content
-        ref={errorHolderRef}
         top={position.top}
         left={position.left}
         show={isShowing}
+        ref={contentRef}
       >
         {content ? (
           content
@@ -199,7 +268,11 @@ const Errorr = ({
                 <DefaultErrorMessage styleData={styleData}>
                   {message ? message : "Default message"}
                 </DefaultErrorMessage>
-                <Shape />
+                <Shape
+                  top={shapePosition.top}
+                  left={shapePosition.left}
+                  rotation={shapePosition.rotation}
+                />
               </DefaultErrorContainer>
             </DefaultErrorHolder>
           </div>
