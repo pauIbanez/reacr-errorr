@@ -3,15 +3,22 @@ import { RefObject } from "react";
 export type Positioning = "start" | "center" | "end";
 export type Animation = "fadeIn" | "fadeOut" | "fadeInOut" | "instant";
 
-export interface ErrorrContextData {
-  errors: ErrorrData[];
-}
-
 export interface ErrorrData {
   name: string;
   options?: ErrorrOptions;
   activate(): void;
   ref: RefObject<HTMLDivElement>;
+}
+
+export interface ErrorrContextData {
+  errorrs: ErrorrData[];
+  loadErrorr(errorr: ErrorrData): void;
+  activateErrorr(name: string): void;
+}
+
+export interface ErrorrContextOptions {
+  errorrOptions?: ErrorrOptions;
+  debug?: boolean;
 }
 
 export interface ErrorrOptions {
