@@ -25,14 +25,43 @@ const Holder = styled.div`
 
 const Content = styled.div<{ top: number; left: number; show: boolean }>`
   opacity: ${(props) => (props.show ? "1" : "0")};
-  height: 50px;
-  width: 200px;
-  background-color: blue;
-  color: red;
   position: absolute;
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
   pointer-events: none;
+`;
+
+const DefaultErrorHolder = styled.div`
+  position: absolute;
+  left: 0;
+  top: 15px;
+`;
+
+const DefaultErrorContainer = styled.div`
+  padding: 10px 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 6px 6px 25px rgba(0, 0, 0, 0.2), -6px -6px 25px rgba(0, 0, 0, 0.2);
+`;
+
+const Shape = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+
+  top: -10px;
+  left: 20px;
+`;
+
+const DefaultErrorMessage = styled.p`
+  font-size: 18px;
+  color: red;
+  white-space: nowrap;
+  margin: 0;
 `;
 
 const Errorr = ({
@@ -141,7 +170,20 @@ const Errorr = ({
         left={position.left}
         show={isShowing}
       >
-        {content ? content : message ? message : "Default message"}
+        {content ? (
+          content
+        ) : (
+          <div style={{ position: "relative" }}>
+            <DefaultErrorHolder>
+              <DefaultErrorContainer>
+                <DefaultErrorMessage>
+                  {message ? message : "Default message"}
+                </DefaultErrorMessage>
+                <Shape />
+              </DefaultErrorContainer>
+            </DefaultErrorHolder>
+          </div>
+        )}
       </Content>
       {children}
     </Holder>
