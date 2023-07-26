@@ -8,15 +8,6 @@ import ErrorrContext from "../contexts/ErrorrContext.contectCreatior";
 import useEffectOnce from "../hooks/useEffectOnce";
 import styled from "styled-components";
 
-interface Props {
-  message?: string;
-  content?: JSX.Element | JSX.Element[];
-  children: JSX.Element | JSX.Element[];
-  styleData?: StyleData;
-  options?: ErrorrCreationOptions;
-  name: string;
-}
-
 const Holder = styled.div`
   height: fit-content;
   width: fit-content;
@@ -111,11 +102,37 @@ const DefaultErrorMessage = styled.p<{ styleData?: StyleData }>`
   white-space: nowrap;
   margin: 0;
 `;
+interface Props {
+  /**
+   * The name of the error, this name is used to show the error with the ErrorrContextProvider
+   */
+  name: string;
+  /**
+   * (Optional) The error message
+   */
+  message?: string;
+  /**
+   * (Optional | Overrides message) The JSX component to render as the error
+   */
+  content?: JSX.Element | JSX.Element[];
+  /**
+   * (Optional) Some style options for the default error container
+   */
+  styleData?: StyleData;
+  /**
+   * (Optional) - The options of this error in particular, overriding the contex's ErrorrOptions for just this one error
+   */
+  options?: ErrorrCreationOptions;
+  /**
+   * The children JSX component, from which the Errorr is positioned
+   */
+  children: JSX.Element | JSX.Element[];
+}
 
 const Errorr = ({
+  name,
   message,
   content,
-  name,
   styleData,
   options,
   children,
