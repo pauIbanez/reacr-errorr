@@ -23,12 +23,36 @@ const Holder = styled.div`
   position: relative;
 `;
 
-const Content = styled.div<{ top: number; left: number; show: boolean }>`
-  opacity: ${(props) => (props.show ? "1" : "0")};
+const Content = styled.div<{
+  top: number;
+  left: number;
+  animation: string;
+}>`
   position: absolute;
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
   pointer-events: none;
+  opacity: 0;
+
+  ${(props) => "animation: " + props.animation + "ms forwards" ?? ""};
+
+  @keyframes out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const DefaultErrorHolder = styled.div`
@@ -103,6 +127,7 @@ const Errorr = ({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [isShowing, setIsShowing] = useState(false);
+  const [hasBeenShowed, setHasBeenShowed] = useState(false);
   const [dimention, setDimention] = useState<{ height: number; width: number }>(
     { height: 10, width: 10 }
   );
@@ -125,6 +150,8 @@ const Errorr = ({
     rotation: 0,
   });
 
+  const [animation, setAnimation] = useState<string>("");
+
   const activate = () => {
     if (timerRef.current.value) {
       clearTimeout(timerRef.current.value);
@@ -137,6 +164,41 @@ const Errorr = ({
       }, 2000);
     }
   };
+
+  useEffect(() => {
+    const duration = fullOptions?.animation.durationInMs ?? 200;
+
+    switch (fullOptions?.animation.type) {
+      case "fadeIn":
+        setAnimation(isShowing ? `in ${duration}` : "");
+        break;
+
+      case "fadeOut":
+        setAnimation(
+          hasBeenShowed ? (!isShowing ? `out ${duration}` : "in 1") : ""
+        );
+        break;
+
+      case "fadeInOut":
+        setAnimation(
+          hasBeenShowed
+            ? isShowing
+              ? `in ${duration}`
+              : `out ${duration}`
+            : ""
+        );
+        break;
+
+      case "instant":
+        setAnimation(isShowing ? `in 1` : "");
+        break;
+    }
+  }, [
+    fullOptions?.animation.durationInMs,
+    fullOptions?.animation.type,
+    isShowing,
+    hasBeenShowed,
+  ]);
 
   useEffectOnce(() => {
     loadErrorr({
@@ -162,6 +224,12 @@ const Errorr = ({
     errorHolderRef.current?.clientWidth,
     errorHolderRef.current?.clientHeight,
   ]);
+
+  useEffect(() => {
+    if (isShowing && !hasBeenShowed) {
+      setHasBeenShowed(true);
+    }
+  }, [isShowing, hasBeenShowed]);
 
   useEffect(() => {
     let baseTop = 0;
@@ -266,8 +334,8 @@ const Errorr = ({
       <Content
         top={position.top}
         left={position.left}
-        show={isShowing}
         ref={contentRef}
+        animation={animation}
       >
         {content ? (
           content
