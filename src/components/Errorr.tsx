@@ -260,7 +260,8 @@ const Errorr = ({
 
     switch (fullOptions?.positioning.block) {
       case "before":
-        baseTop = -(contentRef.current?.clientHeight ?? 10) - 15;
+        baseTop =
+          -(contentRef.current?.clientHeight ?? 10) - (content ? 0 : 15);
         shapeRot = 180;
         shapeTop = contentRef.current?.clientHeight ?? 10;
         break;
@@ -285,13 +286,14 @@ const Errorr = ({
         break;
 
       case "after":
-        baseTop = dimention.height + 15;
+        baseTop = dimention.height + (content ? 0 : 15);
         break;
     }
 
     switch (fullOptions?.positioning.inline) {
       case "before":
-        baseLeft = -(contentRef.current?.clientWidth ?? 10) - 15;
+        baseLeft =
+          -(contentRef.current?.clientWidth ?? 10) - (content ? 0 : 15);
         shapeLeft = (contentRef.current?.clientWidth ?? 10) - 5;
         shapeTop = (contentRef.current?.clientHeight ?? 10) / 2 - 5;
         shapeRot = 90;
@@ -318,7 +320,7 @@ const Errorr = ({
         break;
 
       case "after":
-        baseLeft = dimention.width + 15;
+        baseLeft = dimention.width + (content ? 0 : 15);
         shapeLeft = -15;
         shapeTop = (contentRef.current?.clientHeight ?? 10) / 2 - 5;
         shapeRot = -90;
