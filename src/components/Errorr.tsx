@@ -232,7 +232,6 @@ const Errorr = ({
   }, [getOptions, options]);
 
   useEffect(() => {
-    console.log(contentRef.current?.clientWidth);
     setDimention({
       height: errorHolderRef.current?.clientHeight || 10,
       width: errorHolderRef.current?.clientWidth || 10,
