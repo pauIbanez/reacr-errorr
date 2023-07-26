@@ -28,10 +28,8 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
   };
 
   const loadErrorr = (errorr: ErrorrCreationData) => {
-    const newErrorr: ErrorrCreationData = JSON.parse(JSON.stringify(errorr));
-    newErrorr.options = getOptions(newErrorr.options || {});
-
-    setErrorrs((prevErrorrs) => [...prevErrorrs, newErrorr as ErrorrData]);
+    errorr.options = getOptions(errorr.options || {});
+    setErrorrs((prevErrorrs) => [...prevErrorrs, errorr as ErrorrData]);
   };
 
   const activateErrorr = useCallback(
