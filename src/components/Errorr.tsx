@@ -169,7 +169,7 @@ const Errorr = ({
 
   const [animation, setAnimation] = useState<string>("");
 
-  const activate = () => {
+  const activate = (activeTime: number) => {
     if (timerRef.current.value) {
       clearTimeout(timerRef.current.value);
     }
@@ -178,7 +178,7 @@ const Errorr = ({
     if (!options?.debug) {
       timerRef.current.value = setTimeout(() => {
         setIsShowing(false);
-      }, 2000);
+      }, activeTime);
     }
   };
 
@@ -221,9 +221,7 @@ const Errorr = ({
     loadErrorr({
       name,
       options,
-      activate: () => {
-        activate();
-      },
+      activate,
     });
   });
 

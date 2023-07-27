@@ -13,6 +13,7 @@ export const defaultErrorOptions: ErrorrOptions = {
     block: "after",
     inline: "start",
   },
+  activeTime: 2000,
 };
 
 export const defaultValues: ErrorrContextData = {

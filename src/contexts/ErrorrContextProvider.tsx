@@ -40,7 +40,27 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
         return;
       }
 
-      foundErrorr.activate();
+      foundErrorr.activate(foundErrorr.options.activeTime);
+
+      setErrorrs((stateErrorrs) =>
+        stateErrorrs.map((e) => {
+          if (e.name === name) {
+            e.isActive = true;
+          }
+          return e;
+        })
+      );
+
+      setTimeout(() => {
+        setErrorrs((stateErrorrs) =>
+          stateErrorrs.map((e) => {
+            if (e.name === name) {
+              e.isActive = false;
+            }
+            return e;
+          })
+        );
+      }, foundErrorr.options.activeTime);
     },
     [errorrs, options?.debug]
   );

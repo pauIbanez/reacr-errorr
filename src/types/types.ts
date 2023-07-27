@@ -15,13 +15,14 @@ export type Animation =
 export interface ErrorrCreationData {
   name: string;
   options?: ErrorrCreationOptions;
-  activate(): void;
+  activate(activeTime: number): void;
 }
 
 export interface ErrorrData {
   name: string;
   options: ErrorrOptions;
-  activate(): void;
+  activate(activeTime: number): void;
+  isActive: boolean;
 }
 
 export interface ErrorrContextData {
@@ -67,6 +68,10 @@ export interface ErrorrCreationOptions {
    * This does not update on runtime, refresh the page after setting this to true
    */
   debug?: boolean;
+  /**
+   * The time in ms that the error will be visible for.
+   */
+  activeTime?: number;
 }
 
 export interface ErrorrOptions {
@@ -82,6 +87,7 @@ export interface ErrorrOptions {
     type: Animation;
     durationInMs: number;
   };
+  activeTime: number;
 }
 
 export interface StyleData {
