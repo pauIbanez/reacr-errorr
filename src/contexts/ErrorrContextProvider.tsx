@@ -32,6 +32,14 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
     setErrorrs((prevErrorrs) => [...prevErrorrs, errorr as ErrorrData]);
   };
 
+  const updateErrorr = (errorr: ErrorrCreationData) => {
+    errorr.options = getOptions(errorr.options || {});
+    setErrorrs((prevErrorrs) =>
+      prevErrorrs.map((stateErrorr) =>
+        stateErrorr.name === errorr.name ? (errorr as ErrorrData) : stateErrorr
+      )
+    );
+  };
   const activateErrorr = useCallback(
     (name: string) => {
       const foundErrorr = errorrs.find((errorr) => errorr.name === name);
@@ -40,7 +48,7 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
         return;
       }
 
-      foundErrorr.activate(foundErrorr.options.activeTime);
+      foundErrorr.activate();
 
       setErrorrs((stateErrorrs) =>
         stateErrorrs.map((e) => {
@@ -68,6 +76,7 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
   const contextValue: ErrorrContextData = {
     errorrs,
     loadErrorr,
+    updateErrorr,
     activateErrorr,
     getOptions,
   };

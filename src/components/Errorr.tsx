@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import {
   ErrorrCreationOptions,
   ErrorrOptions,
@@ -137,7 +137,7 @@ const Errorr = ({
   options,
   children,
 }: Props) => {
-  const { loadErrorr, getOptions } = useContext(ErrorrContext);
+  const { loadErrorr, getOptions, updateErrorr } = useContext(ErrorrContext);
 
   const timerRef = useRef<{ value: NodeJS.Timeout | null }>({ value: null });
   const errorHolderRef = useRef<HTMLDivElement>(null);
@@ -169,7 +169,7 @@ const Errorr = ({
 
   const [animation, setAnimation] = useState<string>("");
 
-  const activate = (activeTime: number) => {
+  const activate = useCallback(() => {
     if (timerRef.current.value) {
       clearTimeout(timerRef.current.value);
     }
@@ -178,9 +178,9 @@ const Errorr = ({
     if (!options?.debug) {
       timerRef.current.value = setTimeout(() => {
         setIsShowing(false);
-      }, activeTime);
+      }, fullOptions?.activeTime);
     }
-  };
+  }, [options?.debug, fullOptions?.activeTime]);
 
   useEffect(() => {
     const duration = fullOptions?.animation.durationInMs ?? 200;
@@ -224,6 +224,15 @@ const Errorr = ({
       activate,
     });
   });
+
+  useEffect(() => {
+    updateErrorr({
+      name,
+      options,
+      activate,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activate, name]);
 
   useEffect(() => {
     setFullOptions(getOptions(options || {}));
@@ -343,6 +352,7 @@ const Errorr = ({
     fullOptions,
     contentRef.current?.clientWidth,
     contentRef.current?.clientHeight,
+    content,
   ]);
 
   return (

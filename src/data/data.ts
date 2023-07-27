@@ -21,4 +21,5 @@ export const defaultValues: ErrorrContextData = {
   loadErrorr: () => null,
   activateErrorr: () => null,
   getOptions: () => defaultErrorOptions,
+  updateErrorr: () => null,
 };

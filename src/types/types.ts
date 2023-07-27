@@ -15,19 +15,20 @@ export type Animation =
 export interface ErrorrCreationData {
   name: string;
   options?: ErrorrCreationOptions;
-  activate(activeTime: number): void;
+  activate(): void;
 }
 
 export interface ErrorrData {
   name: string;
   options: ErrorrOptions;
-  activate(activeTime: number): void;
+  activate(): void;
   isActive: boolean;
 }
 
 export interface ErrorrContextData {
   errorrs: ErrorrData[];
   loadErrorr(errorr: ErrorrCreationData): void;
+  updateErrorr(errorr: ErrorrCreationData): void;
   activateErrorr(name: string): void;
   getOptions(options: ErrorrCreationOptions): ErrorrOptions;
 }
@@ -65,7 +66,6 @@ export interface ErrorrCreationOptions {
   };
   /**
    * This option eliminates the error disaperance, allowing you to design it in position.
-   * This does not update on runtime, refresh the page after setting this to true
    */
   debug?: boolean;
   /**
