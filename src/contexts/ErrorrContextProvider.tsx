@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import {
   ErrorrOptions,
   ErrorrContextData,
-  ErrorrContextOptions,
   ErrorrCreationData,
   ErrorrData,
   ErrorrCreationOptions,
@@ -12,7 +11,7 @@ import _ from "lodash";
 import { defaultErrorOptions } from "../data/data";
 
 interface Props {
-  options?: ErrorrContextOptions;
+  options?: ErrorrCreationOptions;
   children: JSX.Element | JSX.Element[];
 }
 

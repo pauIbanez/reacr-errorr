@@ -33,11 +33,6 @@ export interface ErrorrContextData {
   getOptions(options: ErrorrCreationOptions): ErrorrOptions;
 }
 
-export interface ErrorrContextOptions {
-  errorrOptions?: ErrorrCreationOptions;
-  debug?: boolean;
-}
-
 export interface ErrorrCreationOptions {
   /**
    * The offset X and Y for the positioning of the pop-up errorr. This offset is applied to the base position.
