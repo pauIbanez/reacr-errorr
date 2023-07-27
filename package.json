@@ -8,7 +8,8 @@
     "React",
     "Error",
     "Context",
-    "Component"
+    "Component",
+    "Pop-up"
   ],
   "files": [
     "dist",
