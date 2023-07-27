@@ -18,12 +18,14 @@ interface Props {
 const ErrorrContextProvider = ({ children, options }: Props) => {
   const [errorrs, setErrorrs] = useState<ErrorrData[]>([]);
 
-  const getOptions = (options: ErrorrCreationOptions): ErrorrOptions => {
+  const getOptions = (errorrOptions: ErrorrCreationOptions): ErrorrOptions => {
     const defaultOptions: ErrorrOptions = JSON.parse(
       JSON.stringify(defaultErrorOptions)
     );
 
-    return _.merge(defaultOptions, options);
+    const baseOptions: ErrorrOptions = _.merge(defaultOptions, options || {});
+
+    return _.merge(baseOptions, errorrOptions || {});
   };
 
   const loadErrorr = (errorr: ErrorrCreationData) => {
