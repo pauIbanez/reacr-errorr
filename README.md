@@ -81,7 +81,7 @@ The position options for each axis are as folllows: (No one action controls the 
   - `end` Aligns the top/left of the error with the bottom/right of the wrapped component.
   - `after` Aligns the top/left of the error after the wrapped component.
   
-![pòsitioning grid](https://github.com/pauIbanez/reacr-errorr/blob/master/positioning.png?raw=true)
+![pòsitioning grid](https://github.com/pauIbanez/react-errorr/blob/master/positioning.png?raw=true)
 
 
 - `Offsets` The X and Y offsets are the number in pixels of the desired offset applied AFTER the positioning is applied. So you can trully put the error wherever you want.
