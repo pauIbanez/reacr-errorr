@@ -41,6 +41,29 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
       )
     );
   };
+
+  const forceRemoveErrorr = useCallback(
+    (name: string) => {
+      const foundErrorr = errorrs.find((errorr) => errorr.name === name);
+      if (!foundErrorr) {
+        if (options?.debug) console.error(`Errorr not found for name: ${name}`);
+        return;
+      }
+
+      foundErrorr.forceRemove();
+
+      setErrorrs((stateErrorrs) =>
+        stateErrorrs.map((e) => {
+          if (e.name === name) {
+            e.isActive = false;
+          }
+          return e;
+        })
+      );
+    },
+    [errorrs, options?.debug]
+  );
+
   const activateErrorr = useCallback(
     (name: string) => {
       const foundErrorr = errorrs.find((errorr) => errorr.name === name);
@@ -79,6 +102,7 @@ const ErrorrContextProvider = ({ children, options }: Props) => {
     loadErrorr,
     updateErrorr,
     activateErrorr,
+    forceRemoveErrorr,
     getOptions,
   };
 

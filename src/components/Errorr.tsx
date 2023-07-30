@@ -182,6 +182,13 @@ const Errorr = ({
     }
   }, [options?.debug, fullOptions?.activeTime]);
 
+  const forceRemove = useCallback(() => {
+    if (timerRef.current.value) {
+      clearTimeout(timerRef.current.value);
+    }
+    setIsShowing(false);
+  }, []);
+
   useEffect(() => {
     const duration = fullOptions?.animation.durationInMs ?? 200;
 
@@ -222,6 +229,7 @@ const Errorr = ({
       name,
       options,
       activate,
+      forceRemove,
     });
   });
 
@@ -230,6 +238,7 @@ const Errorr = ({
       name,
       options,
       activate,
+      forceRemove,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activate, name]);

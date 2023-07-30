@@ -16,12 +16,14 @@ export interface ErrorrCreationData {
   name: string;
   options?: ErrorrCreationOptions;
   activate(): void;
+  forceRemove(): void;
 }
 
 export interface ErrorrData {
   name: string;
   options: ErrorrOptions;
   activate(): void;
+  forceRemove(): void;
   isActive: boolean;
 }
 
@@ -30,6 +32,7 @@ export interface ErrorrContextData {
   loadErrorr(errorr: ErrorrCreationData): void;
   updateErrorr(errorr: ErrorrCreationData): void;
   activateErrorr(name: string): void;
+  forceRemoveErrorr(name: string): void;
   getOptions(options: ErrorrCreationOptions): ErrorrOptions;
 }
 

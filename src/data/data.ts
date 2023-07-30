@@ -13,13 +13,14 @@ export const defaultErrorOptions: ErrorrOptions = {
     block: "after",
     inline: "start",
   },
-  activeTime: 2000,
+  activeTime: 3000,
 };
 
 export const defaultValues: ErrorrContextData = {
   errorrs: [],
   loadErrorr: () => null,
   activateErrorr: () => null,
+  forceRemoveErrorr: () => null,
   getOptions: () => defaultErrorOptions,
   updateErrorr: () => null,
 };
