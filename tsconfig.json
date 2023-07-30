@@ -3,7 +3,7 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "target": "esnext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "lib": ["dom", "dom.iterable", "esnext"],
     "importHelpers": true,
     "declaration": true,
