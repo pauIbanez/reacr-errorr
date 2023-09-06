@@ -24,7 +24,7 @@ const Content = styled.div<{
   left: ${(props) => props.left}px;
   pointer-events: none;
   opacity: 0;
-
+  z-index: 10;
   ${(props) => "animation: " + props.animation + "ms forwards" ?? ""};
 
   @keyframes out {
