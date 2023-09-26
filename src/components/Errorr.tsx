@@ -8,8 +8,8 @@ import ErrorrContext from "../contexts/ErrorrContext.contectCreatior";
 import useEffectOnce from "../hooks/useEffectOnce";
 import styled from "styled-components";
 
-const Holder = styled.div`
-  width: 100%;
+const Holder = styled.div<{ grow: boolean }>`
+  ${(props) => props.grow && "width: 100%;"}
   position: relative;
 `;
 
@@ -364,7 +364,7 @@ const Errorr = ({
   ]);
 
   return (
-    <Holder ref={errorHolderRef}>
+    <Holder ref={errorHolderRef} grow={styleData?.grow ?? false}>
       <Content
         top={position.top}
         left={position.left}

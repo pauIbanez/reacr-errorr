@@ -95,4 +95,5 @@ export interface StyleData {
   color?: string;
   fontSize?: number | string;
   fontWeight?: number;
+  grow?: boolean;
 }
