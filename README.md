@@ -112,6 +112,7 @@ interface StyleData {
   color?: string;
   fontSize?: number | string;
   fontWeight?: number;
+  grow?: boolean;
 }
 ```
 
@@ -122,6 +123,9 @@ The defaults are:
 - `color`: red
 - `font-size`: 14px
 - `font-weight`: 500
+- `grow`: false
+
+The `grow` boolean will make the width of the container `100%` so it streches the parent container. This can also be used similar to `flex:1;` but only affecting the width.
 
 If you want to implement your own version of the errorr youn can use every pice of functinality, but with your own component. Simply pass your component or JSX in the `content` prop. This will deactivate the default message/pop-up and use your own jsx.
 
